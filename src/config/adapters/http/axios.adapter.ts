@@ -21,11 +21,11 @@ export class AxiosAdapter implements HttpAdapter {
     options?: Record<string, unknown> | undefined,
   ): Promise<T> {
     try {
-      const {data} = await axios.get(url, options);
+      const {data} = await this.axiosInstance.get(url, options);
 
       return data;
     } catch (error) {
-      throw new Error(`Error fetching get: ${url}`);
+      throw new Error(`Error fetching get: ${error}`);
     }
   }
 }
