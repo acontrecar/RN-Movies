@@ -5,6 +5,8 @@ import * as UseCases from '../../core/use-cases';
 import {movieDBFetcher} from '../../config/adapters/movieDB.adapter';
 
 let popularPageNumber = 1;
+let topRatedPageNumber = 1;
+let upcomingPageNumber = 1;
 
 export const useMovies = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -57,6 +59,30 @@ export const useMovies = () => {
       );
 
       setPopular(prev => [...prev, ...popularMovies]);
+    },
+
+    topRatedNextPage: async () => {
+      topRatedPageNumber++;
+      const topRatedMovies = await UseCases.moviesTopRatedUseCase(
+        movieDBFetcher,
+        {
+          page: topRatedPageNumber,
+        },
+      );
+
+      setTopRated(prev => [...prev, ...topRatedMovies]);
+    },
+
+    upcomingNextPage: async () => {
+      upcomingPageNumber++;
+      const upcomingMovies = await UseCases.moviesUpcomingUseCase(
+        movieDBFetcher,
+        {
+          page: upcomingPageNumber,
+        },
+      );
+
+      setUpcoming(prev => [...prev, ...upcomingMovies]);
     },
   };
 };
